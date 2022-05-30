@@ -12,6 +12,9 @@ async function main() {
         backgroundImageUrl: 'linear-gradient(to right, #FA4098, #FFD77F)',
         startsAt: dayjs().toDate(),
         endsAt: dayjs().add(21, 'days').toDate(),
+        onlinePrice: 100,
+        presentialPrice: 250,
+        accommodationPrice: 350,
       },
     });
   }
