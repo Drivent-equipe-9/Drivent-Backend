@@ -56,7 +56,6 @@ model Ticket {
   withAccommodation Boolean
   totalPrice        Int
 
-
   Event      Event      @relation(fields: [eventId], references: [id])
   Enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
   Payment    Payment[]
