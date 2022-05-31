@@ -6,6 +6,9 @@ import { cleanDb } from '../helpers';
 
 beforeAll(async () => {
   await init();
+});
+
+afterAll(async () => {
   await cleanDb();
 });
 
@@ -31,6 +34,9 @@ describe('GET /event', () => {
       logoImageUrl: event.logoImageUrl,
       startsAt: event.startsAt.toISOString(),
       endsAt: event.endsAt.toISOString(),
+      onlinePrice: event.onlinePrice,
+      presentialPrice: event.presentialPrice,
+      accommodationPrice: event.accommodationPrice,
     });
   });
 });
