@@ -11,24 +11,28 @@ export function handleApplicationErrors(
   if (err.name === 'CannotEnrollBeforeStartDateError') {
     return res.status(httpStatus.BAD_REQUEST).send({
       message: err.message,
+      name: err.name,
     });
   }
 
   if (err.name === 'ConflictError' || err.name === 'DuplicatedEmailError') {
     return res.status(httpStatus.CONFLICT).send({
       message: err.message,
+      name: err.name,
     });
   }
 
   if (err.name === 'InvalidCredentialsError') {
     return res.status(httpStatus.UNAUTHORIZED).send({
       message: err.message,
+      name: err.name,
     });
   }
 
   if (err.name === 'NotFoundError') {
     return res.status(httpStatus.NOT_FOUND).send({
       message: err.message,
+      name: err.name,
     });
   }
 
