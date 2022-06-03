@@ -22,6 +22,8 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
     });
     if (!session) return generateUnauthorizedResponse(res);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    res.locals.userId = userId as any | string;
     req.userId = userId;
 
     return next();
