@@ -1,12 +1,19 @@
 import ticketRepository from '@/repositories/ticket-repository';
 import { Ticket } from '@prisma/client';
 
-export type TicketData = Omit<Ticket, 'id'>;
+export type TicketData = Ticket;
 
 export async function postCreateTicket(ticket: TicketData, userId: number) {
   const haveTicket = await findTicketByEnrollmentId(ticket.enrollmentId);
 
-  const createdTicket = await ticketRepository.createTicket(haveTicket, ticket);
+  let createdTicket;
+
+  if (!haveTicket) {
+    createdTicket = await ticketRepository.createTicket(ticket);
+  } else {
+    createdTicket = await ticketRepository.createOrUpdateTicket(haveTicket, ticket);
+  }
+
   await ticketRepository.createPayment(userId, createdTicket.id);
 }
 

@@ -2,7 +2,15 @@ import { prisma } from '@/config';
 import { TicketData } from '@/services';
 import { Ticket } from '@prisma/client';
 
-async function createTicket(haveTicket: Ticket, ticket: TicketData) {
+async function createTicket(ticket: TicketData) {
+  return await prisma.ticket.create({
+    data: {
+      ...ticket,
+    },
+  });
+}
+
+async function createOrUpdateTicket(haveTicket: Ticket, ticket: TicketData) {
   return await prisma.ticket.upsert({
     where: {
       id: haveTicket.id,
@@ -53,9 +61,10 @@ async function findByEnrollmentId(enrollmentId: number) {
 
 const ticketRepository = {
   createTicket,
+  createOrUpdateTicket,
+  findByEnrollmentId,
   createPayment,
   updatePayment,
-  findByEnrollmentId,
 };
 
 export default ticketRepository;
