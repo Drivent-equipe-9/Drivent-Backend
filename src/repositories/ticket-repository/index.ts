@@ -10,15 +10,12 @@ async function createTicket(ticket: TicketData) {
   });
 }
 
-async function createOrUpdateTicket(haveTicket: Ticket, ticket: TicketData) {
-  return await prisma.ticket.upsert({
+async function updateTicket(haveTicket: Ticket, ticket: TicketData) {
+  return await prisma.ticket.update({
     where: {
       id: haveTicket?.id,
     },
-    update: {
-      ...ticket,
-    },
-    create: {
+    data: {
       ...ticket,
     },
   });
@@ -40,6 +37,14 @@ async function createPayment(userId: number, ticketId: number) {
   });
 }
 
+async function findPaymentByUserId(userId: number) {
+  return await prisma.payment.findFirst({
+    where: {
+      userId,
+    },
+  });
+}
+
 async function updatePayment(userId: number) {
   await prisma.payment.update({
     where: {
@@ -51,20 +56,6 @@ async function updatePayment(userId: number) {
   });
 }
 
-// async function updatePayment(userId: number) {
-//   await prisma.$executeRawUnsafe(
-//     `
-//       UPDATE
-//         "Payment"
-//       SET
-//         "isPaid" = true
-//       WHERE
-//         "userId" = $1
-//     `,
-//     userId,
-//   );
-// }
-
 async function findByEnrollmentId(enrollmentId: number) {
   return await prisma.ticket.findFirst({
     where: {
@@ -75,10 +66,11 @@ async function findByEnrollmentId(enrollmentId: number) {
 
 const ticketRepository = {
   createTicket,
-  createOrUpdateTicket,
+  updateTicket,
   findByEnrollmentId,
   createPayment,
   updatePayment,
+  findPaymentByUserId,
 };
 
 export default ticketRepository;
