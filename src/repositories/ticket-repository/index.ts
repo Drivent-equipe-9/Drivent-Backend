@@ -13,7 +13,7 @@ async function createTicket(ticket: TicketData) {
 async function createOrUpdateTicket(haveTicket: Ticket, ticket: TicketData) {
   return await prisma.ticket.upsert({
     where: {
-      id: haveTicket.id,
+      id: haveTicket?.id,
     },
     update: {
       ...ticket,
@@ -40,16 +40,30 @@ async function createPayment(userId: number, ticketId: number) {
   });
 }
 
-async function updatePayment(ticketId: number) {
+async function updatePayment(userId: number) {
   await prisma.payment.update({
     where: {
-      ticketId,
+      userId,
     },
     data: {
       isPaid: true,
     },
   });
 }
+
+// async function updatePayment(userId: number) {
+//   await prisma.$executeRawUnsafe(
+//     `
+//       UPDATE
+//         "Payment"
+//       SET
+//         "isPaid" = true
+//       WHERE
+//         "userId" = $1
+//     `,
+//     userId,
+//   );
+// }
 
 async function findByEnrollmentId(enrollmentId: number) {
   return await prisma.ticket.findFirst({
