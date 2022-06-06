@@ -4,7 +4,7 @@ import { Ticket } from '@prisma/client';
 export type TicketData = Ticket;
 
 export async function postCreateTicket(ticket: TicketData, userId: number) {
-  const { isPaid } = await ticketRepository.findPaymentByUserId(userId);
+  const payment = await ticketRepository.findPaymentByUserId(userId);
   const haveTicket: Ticket | null = await findTicketByEnrollmentId(ticket.enrollmentId);
 
   let createdTicket;
@@ -12,7 +12,7 @@ export async function postCreateTicket(ticket: TicketData, userId: number) {
   if (!haveTicket) {
     createdTicket = await ticketRepository.createTicket(ticket);
     await ticketRepository.createPayment(userId, createdTicket.id);
-  } else if (haveTicket && !isPaid) {
+  } else if (haveTicket && !payment.isPaid) {
     createdTicket = await ticketRepository.updateTicket(haveTicket, ticket);
   }
   return;
