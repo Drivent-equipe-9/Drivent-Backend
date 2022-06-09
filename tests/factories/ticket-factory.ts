@@ -5,10 +5,10 @@ import { User } from '@prisma/client';
 import { createUser } from './users-factory';
 import { prisma } from '@/config';
 
-export async function createTicket(enrollmentId: number) {
+export async function createTicket(enrollmentId: number, eventId: number) {
   return prisma.ticket.create({
     data: {
-      eventId: 1,
+      eventId,
       enrollmentId,
       isOnline: true,
       withAccommodation: false,

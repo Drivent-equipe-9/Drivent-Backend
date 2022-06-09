@@ -3,8 +3,8 @@ import faker from '@faker-js/faker';
 import httpStatus from 'http-status';
 import supertest from 'supertest';
 import * as jwt from 'jsonwebtoken';
-import { createEnrollmentWithAddress, createUser } from '../factories';
-import { cleanDb } from '../helpers';
+import { createEnrollmentWithAddress, createEvent, createTicket, createUser } from '../factories';
+import { cleanDb, generateValidToken } from '../helpers';
 
 beforeAll(async () => {
   await init();
@@ -48,8 +48,27 @@ describe('/ticket/:id', () => {
   });
 
   describe('when token is valid', () => {
-    it.todo('should respond with status 404 if there is no ticket for given user');
-    it.todo('should respond with status 200 and ticket data when there is a ticket for given user');
+    it('should respond with status 200 and an empty object if there is no ticket for given enrollment id', async () => {
+      const token = await generateValidToken();
+      const randomId = Math.floor(Math.random() * 101);
+
+      const response = await server.get(`/ticket/${randomId}`).set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(httpStatus.OK);
+      expect(response.body).toEqual({});
+    });
+
+    it('should respond with status 200 and ticket data when there is a ticket for given enrollmentId', async () => {
+      const user = await createUser();
+      const event = await createEvent();
+      const enrollment = await createEnrollmentWithAddress(user);
+      const token = await generateValidToken(user);
+      const ticket = await createTicket(enrollment.id, event.id);
+
+      const response = await server.get(`/ticket/${enrollment.id}`).set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(httpStatus.OK);
+      expect(response.body).toEqual(ticket);
+    });
   });
-  /* it.todo(); */
 });
