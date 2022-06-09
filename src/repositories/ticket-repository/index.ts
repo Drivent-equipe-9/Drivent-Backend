@@ -21,41 +21,6 @@ async function updateTicket(haveTicket: Ticket, ticket: TicketData) {
   });
 }
 
-async function createPayment(userId: number, ticketId: number) {
-  await prisma.payment.upsert({
-    where: {
-      userId,
-    },
-    update: {
-      userId,
-      ticketId,
-    },
-    create: {
-      userId,
-      ticketId,
-    },
-  });
-}
-
-async function findPaymentByUserId(userId: number) {
-  return await prisma.payment.findFirst({
-    where: {
-      userId,
-    },
-  });
-}
-
-async function updatePayment(userId: number) {
-  await prisma.payment.update({
-    where: {
-      userId,
-    },
-    data: {
-      isPaid: true,
-    },
-  });
-}
-
 async function findByEnrollmentId(enrollmentId: number) {
   return await prisma.ticket.findFirst({
     where: {
@@ -68,9 +33,6 @@ const ticketRepository = {
   createTicket,
   updateTicket,
   findByEnrollmentId,
-  createPayment,
-  updatePayment,
-  findPaymentByUserId,
 };
 
 export default ticketRepository;
