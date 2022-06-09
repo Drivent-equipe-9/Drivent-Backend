@@ -9,8 +9,17 @@ export async function findHotel() {
   return hotels;
 }
 
+export async function findRoomsByHotelId(hotelId: number) {
+  const rooms = hotelRepository.findRoomsByHotelId(hotelId);
+
+  if (!rooms) throw notFoundError();
+
+  return rooms;
+}
+
 const hotelService = {
   findHotel,
+  findRoomsByHotelId,
 };
 
 export default hotelService;
