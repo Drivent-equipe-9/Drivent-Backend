@@ -17,9 +17,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Session    Session[]
-  Enrollment Enrollment[]
-  Payment    Payment[]
+  Session     Session[]
+  Enrollment  Enrollment[]
+  Payment     Payment[]
+  Reservation Reservation[]
 }
 
 model Session {
@@ -46,6 +47,39 @@ model Event {
   accommodationPrice Int      @default(0)
 
   Ticket Ticket[]
+}
+
+model Hotel {
+  id               Int    @id @default(autoincrement())
+  name             String @db.VarChar(255)
+  imageUrl         String @db.VarChar(255)
+  accomodationType String @db.VarChar(255)
+
+  Room        Room[]
+  Reservation Reservation[]
+}
+
+model Room {
+  id               Int     @id @default(autoincrement())
+  hotelId          Int
+  number           String  @unique
+  accomodationType String  @db.VarChar(255)
+  isVacant         Boolean @default(true)
+  vacanciesLeft    Int
+
+  Hotel       Hotel         @relation(fields: [hotelId], references: [id])
+  Reservation Reservation[]
+}
+
+model Reservation {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  roomId  Int
+  hotelId Int
+
+  User  User  @relation(fields: [userId], references: [id])
+  Room  Room  @relation(fields: [roomId], references: [id])
+  Hotel Hotel @relation(fields: [hotelId], references: [id])
 }
 
 model Ticket {

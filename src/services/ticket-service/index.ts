@@ -1,26 +1,22 @@
+import paymentRepository from '@/repositories/payment-repository';
 import ticketRepository from '@/repositories/ticket-repository';
 import { Ticket } from '@prisma/client';
 
 export type TicketData = Ticket;
 
 export async function postCreateTicket(ticket: TicketData, userId: number) {
+  const payment = await paymentRepository.findPaymentByUserId(userId);
   const haveTicket: Ticket | null = await findTicketByEnrollmentId(ticket.enrollmentId);
 
   let createdTicket;
 
   if (!haveTicket) {
     createdTicket = await ticketRepository.createTicket(ticket);
-  } else {
-    createdTicket = await ticketRepository.createOrUpdateTicket(haveTicket, ticket);
+    await paymentRepository.createPayment(userId, createdTicket.id);
+  } else if (haveTicket && !payment.isPaid) {
+    createdTicket = await ticketRepository.updateTicket(haveTicket, ticket);
   }
-
-  await ticketRepository.createPayment(userId, createdTicket.id);
-
-  return createdTicket.id;
-}
-
-export async function updatePayment(userId: number) {
-  await ticketRepository.updatePayment(userId);
+  return;
 }
 
 export async function findTicketByEnrollmentId(enrollmentId: number) {
@@ -29,7 +25,7 @@ export async function findTicketByEnrollmentId(enrollmentId: number) {
 
 const ticketService = {
   postCreateTicket,
-  updatePayment,
+  findTicketByEnrollmentId,
 };
 
 export default ticketService;

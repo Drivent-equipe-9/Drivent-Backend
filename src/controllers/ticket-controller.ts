@@ -12,10 +12,10 @@ export async function createOrUpdateTicket(req: AuthenticatedRequest | Request, 
   res.sendStatus(httpStatus.CREATED);
 }
 
-export async function updatePayment(req: Request, res: Response) {
-  const { userId } = req.body;
+export async function findTicketByEnrollmentId(req: Request, res: Response) {
+  const { id } = req.params;
 
-  await ticketService.updatePayment(userId);
+  const ticket = await ticketService.findTicketByEnrollmentId(parseInt(id));
 
-  res.sendStatus(httpStatus.OK);
+  res.send(ticket).status(httpStatus.OK);
 }
