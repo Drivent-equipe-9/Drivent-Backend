@@ -17,9 +17,16 @@ export async function findRoomsByHotelId(hotelId: number) {
   return rooms;
 }
 
+export async function findVacanciesLeftByHotelId(hotelId: number) {
+  const vacancies = hotelRepository.findVacanciesLeftByHotelId(hotelId);
+
+  return vacancies;
+}
+
 const hotelService = {
   findHotel,
   findRoomsByHotelId,
+  findVacanciesLeftByHotelId,
 };
 
 export default hotelService;
