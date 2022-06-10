@@ -16,3 +16,11 @@ export async function findRoomsByHotelId(req: AuthenticatedRequest, res: Respons
 
   res.status(httpStatus.OK).send(rooms);
 }
+
+export async function findVacanciesLeftByHotelId(req: AuthenticatedRequest, res: Response) {
+  const { hotelId } = req.params;
+
+  const vacanciesLeft = await hotelService.findVacanciesLeftByHotelId(parseInt(hotelId));
+
+  res.status(httpStatus.OK).send(vacanciesLeft._sum);
+}

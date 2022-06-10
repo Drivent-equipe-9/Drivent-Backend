@@ -12,9 +12,21 @@ async function findRoomsByHotelId(hotelId: number) {
   });
 }
 
+async function findVacanciesLeftByHotelId(hotelId: number) {
+  return await prisma.room.aggregate({
+    where: {
+      hotelId,
+    },
+    _sum: {
+      vacanciesLeft: true,
+    },
+  });
+}
+
 const hotelRepository = {
   findHotel,
   findRoomsByHotelId,
+  findVacanciesLeftByHotelId,
 };
 
 export default hotelRepository;
