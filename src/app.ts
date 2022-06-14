@@ -18,6 +18,7 @@ import {
   paymentRouter,
   hotelRouter,
   reservationRouter,
+  oauthGitHubRouter,
 } from '@/routers';
 
 export const redis = createClient({
@@ -37,6 +38,7 @@ app
   .use('/payment', paymentRouter)
   .use('/hotels', hotelRouter)
   .use('/reservation', reservationRouter)
+  .use(oauthGitHubRouter)
   .use(handleApplicationErrors);
 
 export async function init(): Promise<Express> {
