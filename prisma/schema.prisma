@@ -46,7 +46,8 @@ model Event {
   presentialPrice    Int      @default(0)
   accommodationPrice Int      @default(0)
 
-  Ticket Ticket[]
+  Ticket     Ticket[]
+  Activities Activities[]
 }
 
 model Hotel {
@@ -103,6 +104,19 @@ model Payment {
 
   Ticket Ticket @relation(fields: [ticketId], references: [id])
   User   User   @relation(fields: [userId], references: [id])
+}
+
+model Activities {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  date      DateTime @db.Date
+  location  String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  startsAt  Int
+  endsAt    Int
+  vacancies Int
+
+  Event Event @relation(fields: [eventId], references: [id])
 }
 
 model Enrollment {
