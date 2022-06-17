@@ -57,8 +57,8 @@ model Activity {
   date      DateTime @db.Date
   location  String   @db.VarChar(255)
   name      String   @db.VarChar(255)
-  startsAt  Int
-  endsAt    Int
+  startsAt  String
+  endsAt    String
   vacancies Int
 
   Event        Event          @relation(fields: [eventId], references: [id])
