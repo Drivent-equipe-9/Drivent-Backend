@@ -17,10 +17,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Session     Session[]
-  Enrollment  Enrollment[]
-  Payment     Payment[]
-  Reservation Reservation[]
+  Session      Session[]
+  Enrollment   Enrollment[]
+  Payment      Payment[]
+  Reservation  Reservation[]
+  ActivityUser ActivityUser[]
 }
 
 model Session {
@@ -46,7 +47,31 @@ model Event {
   presentialPrice    Int      @default(0)
   accommodationPrice Int      @default(0)
 
-  Ticket Ticket[]
+  Ticket     Ticket[]
+  Activities Activity[]
+}
+
+model Activity {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  date      DateTime @db.Date
+  location  String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  startsAt  Int
+  endsAt    Int
+  vacancies Int
+
+  Event        Event          @relation(fields: [eventId], references: [id])
+  ActivityUser ActivityUser[]
+}
+
+model ActivityUser {
+  id         Int @id @default(autoincrement())
+  activityId Int
+  userId     Int
+
+  Activity Activity @relation(fields: [activityId], references: [id])
+  User     User     @relation(fields: [userId], references: [id])
 }
 
 model Hotel {
