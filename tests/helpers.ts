@@ -4,13 +4,14 @@ import { User } from '@prisma/client';
 import { createUser } from './factories';
 import { createSession } from './factories/sessions-factory';
 import { prisma } from '@/config';
+import { redis } from '../../Drivent-Backend/src/app';
 
 export async function cleanDb() {
   await prisma.address.deleteMany({});
   await prisma.payment.deleteMany({});
   await prisma.ticket.deleteMany({});
   await prisma.enrollment.deleteMany({});
-  await prisma.event.deleteMany({});
+  await redis.del('event');
   await prisma.session.deleteMany({});
   await prisma.user.deleteMany({});
 }
