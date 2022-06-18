@@ -1,24 +1,28 @@
 import { Hotel, PrismaClient } from '@prisma/client';
 import dayjs from 'dayjs';
+import { redis } from '@/app'
+
 const prisma = new PrismaClient();
 
 type hotelData = Omit<Hotel, 'id'>
 
 async function main() {
-  let event = await prisma.event.findFirst();
+  let event = await redis.get('event');
   if (!event) {
-    event = await prisma.event.create({
-      data: {
-        title: 'Driven.t',
-        logoImageUrl: 'https://files.driveneducation.com.br/images/logo-rounded.png',
-        backgroundImageUrl: 'linear-gradient(to right, #FA4098, #FFD77F)',
-        startsAt: dayjs().toDate(),
-        endsAt: dayjs().add(21, 'days').toDate(),
-        onlinePrice: 100,
-        presentialPrice: 250,
-        accommodationPrice: 350,
-      },
-    });
+    event = {
+      id: 1,
+      title: 'Driven.t',
+      logoImageUrl: 'https://files.driveneducation.com.br/images/logo-rounded.png',
+      backgroundImageUrl: 'linear-gradient(to right, #FA4098, #FFD77F)',
+      startsAt: dayjs().toDate(),
+      endsAt: dayjs().add(21, 'days').toDate(),
+      createdAt: dayjs().toDate(),
+      updatedAt: dayjs().toDate(),
+      onlinePrice: 100,
+      presentialPrice: 250,
+      accommodationPrice: 350,
+    };
+    await redis.set('event', JSON.stringify(event));
   }
 
   let hotel = await prisma.hotel.findFirst();
