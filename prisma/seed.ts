@@ -386,7 +386,7 @@ async function main() {
           date: dayjs().add(5, 'days').toDate(),
           location: "Auditório Lateral",
           name: "Oficina Forza",
-          startsAt: "08",
+          startsAt: "09",
           endsAt: "10",
           vacancies: 16,
         },
