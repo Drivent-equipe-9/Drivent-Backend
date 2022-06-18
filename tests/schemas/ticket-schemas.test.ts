@@ -1,5 +1,10 @@
+import { close } from '@/app';
 import { faker } from '@faker-js/faker';
 import Joi from 'joi';
+
+afterAll(() => {
+  close();
+});
 
 describe('ticketSchema', () => {
   const ticketSchema = Joi.object({

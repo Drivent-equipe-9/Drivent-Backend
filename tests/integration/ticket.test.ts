@@ -1,4 +1,4 @@
-import app, { init } from '@/app';
+import app, { close, init } from '@/app';
 import faker from '@faker-js/faker';
 import httpStatus from 'http-status';
 import supertest from 'supertest';
@@ -10,6 +10,10 @@ import { prisma } from '@/config';
 beforeAll(async () => {
   await init();
   await cleanDb();
+});
+
+afterAll(() => {
+  close();
 });
 
 const server = supertest(app);

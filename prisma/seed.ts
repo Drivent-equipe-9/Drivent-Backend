@@ -1,10 +1,10 @@
 import { Hotel, PrismaClient } from '@prisma/client';
 import dayjs from 'dayjs';
-import { redis } from '@/app'
+import { redis } from '@/app';
 
 const prisma = new PrismaClient();
 
-type hotelData = Omit<Hotel, 'id'>
+type hotelData = Omit<Hotel, 'id'>;
 
 async function main() {
   let event = await redis.get('event');
@@ -25,6 +25,8 @@ async function main() {
     await redis.set('event', JSON.stringify(event));
   }
 
+  console.log({ event });
+
   let hotel = await prisma.hotel.findFirst();
   if (!hotel) {
     await prisma.hotel.createMany({
@@ -36,18 +38,22 @@ async function main() {
         },
         {
           name: 'Driven Palace',
-          imageUrl: 'https://imgcy.trivago.com/c_lfill,d_dummy.jpeg,e_sharpen:60,f_auto,h_450,q_auto,w_450/itemimages/96/95/96959_v6.jpeg',
+          imageUrl:
+            'https://imgcy.trivago.com/c_lfill,d_dummy.jpeg,e_sharpen:60,f_auto,h_450,q_auto,w_450/itemimages/96/95/96959_v6.jpeg',
           accomodationType: 'Single, Double e Triple',
         },
         {
           name: 'Driven World',
-          imageUrl: 'https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2017/08/29/1013/Grand-Hyatt-Rio-de-Janeiro-P443-Pool.jpg/Grand-Hyatt-Rio-de-Janeiro-P443-Pool.16x9.jpg?imwidth=1920',
+          imageUrl:
+            'https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2017/08/29/1013/Grand-Hyatt-Rio-de-Janeiro-P443-Pool.jpg/Grand-Hyatt-Rio-de-Janeiro-P443-Pool.16x9.jpg?imwidth=1920',
           accomodationType: 'Single e Double',
         },
       ],
       skipDuplicates: true,
-    })
+    });
   }
+
+  console.log({ hotel });
 
   let room = await prisma.room.findFirst();
   if (!room) {
@@ -280,12 +286,148 @@ async function main() {
           number: '110',
           accomodationType: 'Double',
           vacanciesLeft: 2,
-        }
+        },
       ],
     });
   }
 
-  console.log({ event });
+  console.log({ room });
+
+  let activity = await prisma.activity.findFirst();
+  if (!activity) {
+    await prisma.activity.createMany({
+      data: [
+        {
+          eventId: 1,
+          date: dayjs().add(3, 'days').toDate(),
+          location: 'Auditório Principal',
+          name: 'Oficina lolzinho',
+          startsAt: '09',
+          endsAt: '10',
+          vacancies: 0,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(3, 'days').toDate(),
+          location: 'Auditório Lateral',
+          name: 'Oficina batata',
+          startsAt: '09',
+          endsAt: '11',
+          vacancies: 10,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(3, 'days').toDate(),
+          location: 'Sala de Workshop',
+          name: 'Oficina cansei',
+          startsAt: '09',
+          endsAt: '11',
+          vacancies: 10,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(4, 'days').toDate(),
+          location: 'Auditório Principal',
+          name: 'Oficina lolzinho',
+          startsAt: '10',
+          endsAt: '11',
+          vacancies: 0,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(4, 'days').toDate(),
+          location: 'Auditório Lateral',
+          name: 'Oficina batata',
+          startsAt: '09',
+          endsAt: '11',
+          vacancies: 10,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(4, 'days').toDate(),
+          location: 'Auditório Lateral',
+          name: 'Oficina neosoro',
+          startsAt: '11',
+          endsAt: '12',
+          vacancies: 10,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(4, 'days').toDate(),
+          location: 'Auditório Lateral',
+          name: 'Oficina berinjela',
+          startsAt: '14',
+          endsAt: '16',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(4, 'days').toDate(),
+          location: 'Auditório Principal',
+          name: 'Oficina berinjela',
+          startsAt: '12',
+          endsAt: '14',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(5, 'days').toDate(),
+          location: 'Auditório Principal',
+          name: 'Oficina de comida',
+          startsAt: '09',
+          endsAt: '10',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(5, 'days').toDate(),
+          location: 'Auditório Principal',
+          name: 'Almoço',
+          startsAt: '11',
+          endsAt: '13',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(5, 'days').toDate(),
+          location: 'Auditório Lateral',
+          name: 'Oficina Forza',
+          startsAt: '09',
+          endsAt: '10',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(5, 'days').toDate(),
+          location: 'Auditório Lateral',
+          name: 'Oficina Minecraft',
+          startsAt: '10',
+          endsAt: '12',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(5, 'days').toDate(),
+          location: 'Sala de Workshop',
+          name: 'Workshop Montando seu PC',
+          startsAt: '10',
+          endsAt: '12',
+          vacancies: 16,
+        },
+        {
+          eventId: 1,
+          date: dayjs().add(5, 'days').toDate(),
+          location: 'Sala de Workshop',
+          name: 'Workshop Codando seu Próprio Jogo',
+          startsAt: '13',
+          endsAt: '15',
+          vacancies: 16,
+        },
+      ],
+    });
+  }
+
+  console.log({ activity });
 }
 
 main()
