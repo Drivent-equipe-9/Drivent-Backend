@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Activity" ALTER COLUMN "startsAt" SET DATA TYPE TEXT,
+ALTER COLUMN "endsAt" SET DATA TYPE TEXT;
