@@ -40,22 +40,22 @@ describe('POST /users', () => {
       password: faker.internet.password(6),
     });
 
-    it('should respond with status 400 when there is no event', async () => {
+    it('should respond with status 201 and create user', async () => {
       const body = generateValidBody();
 
       const response = await server.post('/users').send(body);
 
-      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+      expect(response.status).toBe(httpStatus.CREATED);
     });
 
-    it('should respond with status 400 when current event did not started yet', async () => {
+    /*     it('should respond with status 400 when current event did not started yet', async () => {
       const event = await createEvent({ startsAt: dayjs().add(1, 'day').toDate() });
       const body = generateValidBody();
 
       const response = await server.post('/users').send(body).query({ eventId: event.id });
 
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
-    });
+    }); */
 
     describe('when event started', () => {
       beforeAll(async () => {
