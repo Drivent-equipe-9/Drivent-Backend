@@ -34,23 +34,6 @@ model Session {
   User User @relation(fields: [userId], references: [id])
 }
 
-model Event {
-  id                 Int      @id @default(autoincrement())
-  title              String   @db.VarChar(255)
-  backgroundImageUrl String   @db.VarChar(255)
-  logoImageUrl       String   @db.VarChar(255)
-  startsAt           DateTime
-  endsAt             DateTime
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  onlinePrice        Int      @default(0)
-  presentialPrice    Int      @default(0)
-  accommodationPrice Int      @default(0)
-
-  Ticket     Ticket[]
-  Activities Activity[]
-}
-
 model Activity {
   id        Int      @id @default(autoincrement())
   eventId   Int
@@ -61,7 +44,6 @@ model Activity {
   endsAt    String
   vacancies Int
 
-  Event        Event          @relation(fields: [eventId], references: [id])
   ActivityUser ActivityUser[]
 }
 
@@ -115,7 +97,6 @@ model Ticket {
   withAccommodation Boolean
   totalPrice        Int
 
-  Event      Event      @relation(fields: [eventId], references: [id])
   Enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
   Payment    Payment[]
 }
