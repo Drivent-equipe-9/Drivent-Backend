@@ -1,5 +1,14 @@
 version: '3'
 services:
+  drivent-redis-test:
+    container_name: drivent-redis-test
+    image: redis:6.2-alpine
+    restart: always
+    ports: 
+      - 6380:${REDIS_PORT}
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - drivent-redis-test-data:/data
   drivent-postgres-test:
     image: postgres:13-alpine
     environment:
@@ -19,6 +28,7 @@ services:
     container_name: drivent-test
     depends_on:
       - drivent-postgres-test
+      - drivent-redis-test
     logging:
       driver: 'json-file'
       options:
@@ -35,3 +45,6 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
+volumes:
+  postgres-test:
+  drivent-redis-test-data:

@@ -1,5 +1,14 @@
 version: '3'
 services:
+  drivent-redis-development:
+    container_name: drivent-redis-development
+    image: redis:6.2-alpine
+    restart: always
+    ports: 
+      - 6380:${REDIS_PORT}
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - drivent-redis-development-data:/data
   drivent-postgres-development:
     image: postgres:13-alpine
     container_name: drivent-postgres-development
