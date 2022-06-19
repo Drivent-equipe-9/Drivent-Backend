@@ -5,8 +5,8 @@ services:
     image: redis:6.2-alpine
     restart: always
     ports: 
-      - 6380:${REDIS_PORT}
-    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+      - 6380:6379
+    command: redis-server --save 20 1 --loglevel warning
     volumes:
       - drivent-redis-test:/data
   drivent-postgres-test:
