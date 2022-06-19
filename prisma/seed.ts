@@ -32,7 +32,7 @@ async function main() {
 
   console.log({ hotel });
 
-  const room = await prisma.room.findFirst();
+  let room = await prisma.room.findFirst();
   if (!room) {
     await prisma.room.createMany({
       data: [
@@ -270,12 +270,12 @@ async function main() {
 
   console.log({ room });
 
-  const activity = await prisma.activity.findFirst();
+  let activity = await prisma.activity.findFirst();
   if (!activity) {
     await prisma.activity.createMany({
       data: [
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(3, 'days').toDate(),
           location: 'Auditório Principal',
           name: 'Oficina lolzinho',
@@ -284,7 +284,7 @@ async function main() {
           vacancies: 0,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(3, 'days').toDate(),
           location: 'Auditório Lateral',
           name: 'Oficina batata',
@@ -293,7 +293,7 @@ async function main() {
           vacancies: 10,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(3, 'days').toDate(),
           location: 'Sala de Workshop',
           name: 'Oficina cansei',
@@ -302,7 +302,7 @@ async function main() {
           vacancies: 10,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(4, 'days').toDate(),
           location: 'Auditório Principal',
           name: 'Oficina lolzinho',
@@ -311,7 +311,7 @@ async function main() {
           vacancies: 0,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(4, 'days').toDate(),
           location: 'Auditório Lateral',
           name: 'Oficina batata',
@@ -320,7 +320,7 @@ async function main() {
           vacancies: 10,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(4, 'days').toDate(),
           location: 'Auditório Lateral',
           name: 'Oficina neosoro',
@@ -329,7 +329,7 @@ async function main() {
           vacancies: 10,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(4, 'days').toDate(),
           location: 'Auditório Lateral',
           name: 'Oficina berinjela',
@@ -338,7 +338,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(4, 'days').toDate(),
           location: 'Auditório Principal',
           name: 'Oficina berinjela',
@@ -347,7 +347,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(5, 'days').toDate(),
           location: 'Auditório Principal',
           name: 'Oficina de comida',
@@ -356,7 +356,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(5, 'days').toDate(),
           location: 'Auditório Principal',
           name: 'Almoço',
@@ -365,7 +365,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(5, 'days').toDate(),
           location: 'Auditório Lateral',
           name: 'Oficina Forza',
@@ -374,7 +374,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(5, 'days').toDate(),
           location: 'Auditório Lateral',
           name: 'Oficina Minecraft',
@@ -383,7 +383,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(5, 'days').toDate(),
           location: 'Sala de Workshop',
           name: 'Workshop Montando seu PC',
@@ -392,7 +392,7 @@ async function main() {
           vacancies: 16,
         },
         {
-          eventId: 1,
+          eventId: 3,
           date: dayjs().add(5, 'days').toDate(),
           location: 'Sala de Workshop',
           name: 'Workshop Codando seu Próprio Jogo',

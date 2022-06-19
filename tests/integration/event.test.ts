@@ -1,4 +1,6 @@
-import { close, init, redis } from '@/app';
+import app, { close, init, redis } from '@/app';
+import httpStatus from 'http-status';
+import supertest from 'supertest';
 import { createEvent } from '../factories';
 import { cleanDb } from '../helpers';
 
