@@ -7,3 +7,4 @@ export * from './payment-router';
 export * from './hotel-router';
 export * from './reservation-router';
 export * from './activities-router';
+export * from './oauthGitHub-router';
