@@ -21,6 +21,8 @@ async function main() {
     });
   }
 
+  console.log({ event });
+
   let hotel = await prisma.hotel.findFirst();
   if (!hotel) {
     await prisma.hotel.createMany({
@@ -44,6 +46,8 @@ async function main() {
       skipDuplicates: true,
     })
   }
+
+  console.log({ hotel });
 
   let room = await prisma.room.findFirst();
   if (!room) {
@@ -281,7 +285,143 @@ async function main() {
     });
   }
 
-  console.log({ event });
+  console.log({ room });
+
+  let activity = await prisma.activity.findFirst();
+  if (!activity) {
+    await prisma.activity.createMany({
+      data: [
+        {
+          eventId: 3,
+          date: dayjs().add(3, 'days').toDate(),
+          location: "Auditório Principal",
+          name: "Oficina lolzinho",
+          startsAt: "09",
+          endsAt: "10",
+          vacancies: 0,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(3, 'days').toDate(),
+          location: "Auditório Lateral",
+          name: "Oficina batata",
+          startsAt: "09",
+          endsAt: "11",
+          vacancies: 10,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(3, 'days').toDate(),
+          location: "Sala de Workshop",
+          name: "Oficina cansei",
+          startsAt: "09",
+          endsAt: "11",
+          vacancies: 10,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(4, 'days').toDate(),
+          location: "Auditório Principal",
+          name: "Oficina lolzinho",
+          startsAt: "10",
+          endsAt: "11",
+          vacancies: 0,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(4, 'days').toDate(),
+          location: "Auditório Lateral",
+          name: "Oficina batata",
+          startsAt: "09",
+          endsAt: "11",
+          vacancies: 10,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(4, 'days').toDate(),
+          location: "Auditório Lateral",
+          name: "Oficina neosoro",
+          startsAt: "11",
+          endsAt: "12",
+          vacancies: 10,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(4, 'days').toDate(),
+          location: "Auditório Lateral",
+          name: "Oficina berinjela",
+          startsAt: "14",
+          endsAt: "16",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(4, 'days').toDate(),
+          location: "Auditório Principal",
+          name: "Oficina berinjela",
+          startsAt: "12",
+          endsAt: "14",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(5, 'days').toDate(),
+          location: "Auditório Principal",
+          name: "Oficina de comida",
+          startsAt: "09",
+          endsAt: "10",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(5, 'days').toDate(),
+          location: "Auditório Principal",
+          name: "Almoço",
+          startsAt: "11",
+          endsAt: "13",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(5, 'days').toDate(),
+          location: "Auditório Lateral",
+          name: "Oficina Forza",
+          startsAt: "09",
+          endsAt: "10",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(5, 'days').toDate(),
+          location: "Auditório Lateral",
+          name: "Oficina Minecraft",
+          startsAt: "10",
+          endsAt: "12",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(5, 'days').toDate(),
+          location: "Sala de Workshop",
+          name: "Workshop Montando seu PC",
+          startsAt: "10",
+          endsAt: "12",
+          vacancies: 16,
+        },
+        {
+          eventId: 3,
+          date: dayjs().add(5, 'days').toDate(),
+          location: "Sala de Workshop",
+          name: "Workshop Codando seu Próprio Jogo",
+          startsAt: "13",
+          endsAt: "15",
+          vacancies: 16,
+        },
+      ]
+    });
+  }
+
+  console.log({ activity });
 }
 
 main()

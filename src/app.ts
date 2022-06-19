@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import 'express-async-errors';
 import express, { Express } from 'express';
+import { createClient } from 'redis';
 import cors from 'cors';
 
 import { loadEnv, connectDb, disconnectDB } from '@/config';
@@ -17,7 +18,12 @@ import {
   paymentRouter,
   hotelRouter,
   reservationRouter,
+  activitiesRouter,
 } from '@/routers';
+
+export const redis = createClient({
+  url: process.env.REDIS_URL,
+});
 
 const app = express();
 app
@@ -32,9 +38,11 @@ app
   .use('/payment', paymentRouter)
   .use('/hotels', hotelRouter)
   .use('/reservation', reservationRouter)
+  .use('/activities', activitiesRouter)
   .use(handleApplicationErrors);
 
-export function init(): Promise<Express> {
+export async function init(): Promise<Express> {
+  await redis.connect();
   connectDb();
   return Promise.resolve(app);
 }

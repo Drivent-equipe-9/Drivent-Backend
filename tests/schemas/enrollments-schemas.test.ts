@@ -1,6 +1,11 @@
+import { close } from '@/app';
 import { createEnrollmentSchema } from '@/schemas';
 import { generateCPF, getStates } from '@brazilian-utils/brazilian-utils';
 import { faker } from '@faker-js/faker';
+
+afterAll(() => {
+  close();
+});
 
 describe('createEnrollmentSchema', () => {
   const generateValidInput = () => ({
