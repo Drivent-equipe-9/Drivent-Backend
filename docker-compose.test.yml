@@ -8,7 +8,7 @@ services:
       - 6380:${REDIS_PORT}
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
     volumes:
-      - drivent-redis-test-data:/data
+      - drivent-redis-test:/data
   drivent-postgres-test:
     image: postgres:13-alpine
     environment:
@@ -47,4 +47,4 @@ services:
       JWT_SECRET: ${JWT_SECRET}
 volumes:
   postgres-test:
-  drivent-redis-test-data:
+  drivent-redis-test:
