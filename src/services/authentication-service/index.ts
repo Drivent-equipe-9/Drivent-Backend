@@ -8,7 +8,6 @@ import { invalidCredentialsError } from './errors';
 
 async function signIn(params: SignInParams): Promise<SignInResult> {
   const { email, password } = params;
-
   const user = await getUserOrFail(email);
 
   await validatePasswordOrFail(password, user.password);
@@ -38,6 +37,12 @@ async function createSession(userId: number) {
   return token;
 }
 
+async function findSessionByUserId(userId: number) {
+  const sessionToken = await sessionRepository.findByUserId(userId);
+
+  return sessionToken;
+}
+
 async function validatePasswordOrFail(password: string, userPassword: string) {
   const isPasswordValid = await bcrypt.compare(password, userPassword);
   if (!isPasswordValid) throw invalidCredentialsError();
@@ -54,6 +59,8 @@ type GetUserOrFailResult = Pick<User, 'id' | 'email' | 'password'>;
 
 const authenticationService = {
   signIn,
+  createSession,
+  findSessionByUserId,
 };
 
 export default authenticationService;
