@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["extendedIndexes"]
 }
 
 datasource db {
@@ -45,6 +46,8 @@ model Activity {
   vacancies Int
 
   ActivityUser ActivityUser[]
+
+  @@index([date(sort: Asc)])
 }
 
 model ActivityUser {
@@ -76,6 +79,8 @@ model Room {
 
   Hotel       Hotel         @relation(fields: [hotelId], references: [id])
   Reservation Reservation[]
+
+  @@index([hotelId])
 }
 
 model Reservation {
