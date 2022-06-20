@@ -8,15 +8,20 @@ export async function getActivitiesDates() {
   return formatedActivitiesDates;
 }
 
-export async function getScheduleByDate(date: Date) {
-  const schedule = await activityRepository.findScheduleByDate(date);
+export async function getScheduleByDate(date: Date, userId: number) {
+  const schedule = await activityRepository.findScheduleByDate(date, userId);
 
   return schedule;
+}
+
+export async function register(userId: number, activityId: number) {
+  return await activityRepository.register(userId, activityId);
 }
 
 const activityService = {
   getActivitiesDates,
   getScheduleByDate,
+  register,
 };
 
 export default activityService;
