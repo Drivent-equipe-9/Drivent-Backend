@@ -46,7 +46,7 @@ oauthGitHubRouter.post('/oauth/github/login', async (req, res) => {
     const sessionToken = await authenticationService.findSessionByUserId(registeredUser.id);
 
     const resData = {
-      user: { userId: registeredUser.id, email: registeredUser.email },
+      user: { id: registeredUser.id, email: registeredUser.email },
       token: sessionToken,
     };
 
