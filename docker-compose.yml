@@ -3,10 +3,13 @@ services:
   drivent-postgres-production:
     container_name: drivent-postgres-production
     image: postgres:13-alpine
+    restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DATABASE}
+      GH_CLIENT_ID: ${GH_CLIENT_ID}
+      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET}
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     volumes:
