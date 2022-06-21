@@ -22,9 +22,9 @@ import {
   oauthGitHubRouter,
 } from '@/routers';
 
-export const redis = createClient({
-  url: process.env.REDIS_URL,
-});
+const url = process.env.REDIS_URL;
+
+export const redis = createClient({ url });
 
 const app = express();
 app
